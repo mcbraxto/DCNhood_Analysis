@@ -1739,13 +1739,13 @@ var grocery =
 
 for(var i = 0; i < farmers_markets.features.length; i++) {
   farmers_markets.features[i].properties['marker-color'] = '#DC143C';
-  farmers_markets.features[i].properties['marker-symbol'] = 'grocery';
+  farmers_markets.features[i].properties['marker-symbol'] = 'farm';
   farmers_markets.features[i].properties['marker-size'] = 'small';
 };
   
 for(var i = 0; i < grocery.features.length; i++) {
   grocery.features[i].properties['marker-color'] = 'FF9966';
-  grocery.features[i].properties['marker-symbol'] = 'farm';
+  grocery.features[i].properties['marker-symbol'] = 'grocery';
   grocery.features[i].properties['marker-size'] = 'small';
 };
 
@@ -1758,5 +1758,19 @@ var farmers_marketsLayer = L.mapbox.featureLayer(farmers_markets)
     .addTo(map);
 var groceryLayer = L.mapbox.featureLayer(grocery)
     .addTo(map);
-    
+
+groceryLayer.on('click', function (e) {
+  // Get the GeoJSON from groceryFeatures and farmers_marketsFeatures
+  var groceryFeatures = groceryLayer.getGeoJSON();
+  var farmers_marketsFeatures = farmers_marketsLayer.getGeoJSON();
+
+  // Using Turf, find the nearest farmers_markets to grocery clicked
+  var nearestfarmers_markets = turf.nearest(e.layer.feature, farmers_marketsFeatures);
+
+  // Change the nearest farmers_markets to a large marker
+  nearestfarmers_markets.properties['marker-size'] = 'large';
+
+  // Add the new GeoJSON to farmers_marketsLayer
+  farmers_marketsLayer.setGeoJSON(farmers_marketsFeatures);
+});
 </script>
