@@ -1,0 +1,1762 @@
+<link href='https://api.tiles.mapbox.com/mapbox.js/v2.2.3/mapbox.css' rel='stylesheet' />
+<script src='https://api.tiles.mapbox.com/mapbox.js/v2.2.3/mapbox.js'></script>
+<script src='https://api.tiles.mapbox.com/mapbox.js/plugins/turf/v2.0.2/turf.min.js'></script>
+
+<div id='map'></div>
+
+<style>
+  body { margin: 0; padding: 0; }
+  #map { position: absolute; top: 0; bottom: 0; width: 100%; }
+</style>
+
+<script>
+var farmers_markets = 
+
+{
+    "type": "FeatureCollection",
+    "features": [
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -76.99619818952078,
+                    38.88739320186793
+                ]
+            },
+            "properties": {
+                "name": "Eastern Market Farmers Market",
+                "description": "DCs oldest continually operated fresh food public market. Year-round. Adjoining arts & crafts market.",
+                "OBJECTID": "1",
+                "LAYER": "Farmers Market",
+                "THEME": "Local Business & Food",
+                "IMAGE_": "farmsmkt_eastern.jpg",
+                "ADDRESS": "7th Street SE & North Carolina Avenue SE",
+                "PHONE": "202-478-2429",
+                "WEB_URL": "www.easternmarketdc.com",
+                "WEB_URL2": "www.goodgenerallink.org",
+                "STEWARD": "Jen",
+                "SOURCE": "http://www.dcfoodfinder.org/",
+                "LAST_UPDAT": "2009",
+                "X": "400330.039998",
+                "Y": "135504.990011",
+                "ADDRID": "18055",
+                "PRIORITY_LEVEL": "1",
+                "EMAIL_PHONE": "jennifer.guillaume@dc.gov _ 535-2252"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -77.02845662422524,
+                    38.8872548511898
+                ]
+            },
+            "properties": {
+                "name": "U.S. Department of Agriculture Farmers Market",
+                "description": "Locally grown fresh fruits and vegetables. Friday. WIC and Senior Nutrition coupons accepted.",
+                "OBJECTID": "2",
+                "LAYER": "Farmers Market",
+                "THEME": "Local Business & Food",
+                "IMAGE_": "",
+                "ADDRESS": "1200 INDEPENDENCE AVENUE SW ",
+                "PHONE": "(800)384-8704",
+                "WEB_URL": "http://www.ams.usda.gov/AMSv1.0/farmersmarkets",
+                "WEB_URL2": "",
+                "STEWARD": "Jen",
+                "SOURCE": "http://www.dcfoodfinder.org/",
+                "LAST_UPDAT": "2009",
+                "X": "397531.32",
+                "Y": "135490.01",
+                "ADDRID": "294873",
+                "EMAIL_PHONE": "jennifer.guillaume@dc.gov _ 535-2252"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -77.02152638635526,
+                    38.88408898653381
+                ]
+            },
+            "properties": {
+                "name": "US Department of Transportation Farmers Market",
+                "description": "Seasonal produce direct from farmers. Tuesday.",
+                "OBJECTID": "3",
+                "LAYER": "Farmers Market",
+                "THEME": "Local Business & Food",
+                "IMAGE_": "",
+                "ADDRESS": "400 7th Street SW  ",
+                "PHONE": "(202)366-0674",
+                "WEB_URL": "",
+                "WEB_URL2": "",
+                "STEWARD": "Jen",
+                "SOURCE": "http://www.dcfoodfinder.org/",
+                "LAST_UPDAT": "2009",
+                "X": "398132.5",
+                "Y": "135138.41",
+                "ADDRID": "276612",
+                "PRIORITY_LEVEL": "1",
+                "EMAIL_PHONE": "jennifer.guillaume@dc.gov _ 535-2252"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -77.01215999355102,
+                    38.91261297647311
+                ]
+            },
+            "properties": {
+                "name": "Bloomingdale Farmers Market",
+                "description": "Locally grown fresh fruits and vegetables. May-November. Sunday. WIC and Senior Nutrition coupons accepted.",
+                "OBJECTID": "4",
+                "LAYER": "Farmers Market",
+                "THEME": "Local Business & Food",
+                "IMAGE_": "",
+                "ADDRESS": "1st Street NW & R Street NW ",
+                "PHONE": "",
+                "WEB_URL": "http://www.14andufarmersmarket.com/",
+                "WEB_URL2": "",
+                "STEWARD": "Jen",
+                "SOURCE": "http://www.dcfoodfinder.org/",
+                "LAST_UPDAT": "2009",
+                "X": "398945.579997",
+                "Y": "138304.650014",
+                "ADDRID": "15468",
+                "PRIORITY_LEVEL": "1",
+                "EMAIL_PHONE": "jennifer.guillaume@dc.gov _ 535-2252"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -77.04488750802145,
+                    38.91064178836335
+                ]
+            },
+            "properties": {
+                "name": "Dupont Circle FRESHFARM Farmers Market",
+                "description": "Locally grown fresh fruits and vegetables. Year-round. Sunday. WIC and Senior Nutrition coupons accepted.",
+                "OBJECTID": "5",
+                "LAYER": "Farmers Market",
+                "THEME": "Local Business & Food",
+                "IMAGE_": "farmsmkt_dupontcircle.jpg",
+                "ADDRESS": "1500 Block of 20th Street NW   ",
+                "PHONE": "",
+                "WEB_URL": "http://www.freshfarmmarket.org/markets/dupont_circle.html",
+                "WEB_URL2": "http://www.freshfarmmarket.org/",
+                "STEWARD": "Jen",
+                "SOURCE": "http://www.dcfoodfinder.org/",
+                "LAST_UPDAT": "2009",
+                "X": "396107.063994",
+                "Y": "138086.718942",
+                "ADDRID": "5616",
+                "PRIORITY_LEVEL": "1",
+                "EMAIL_PHONE": "jennifer.guillaume@dc.gov _ 535-2252"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -76.99739034211588,
+                    38.89995189386984
+                ]
+            },
+            "properties": {
+                "name": "H Street FRESHFARM Farmers Market",
+                "description": "Locally grown fresh fruits and vegetables. May-October. Saturday. WIC and Senior Nutrition coupons accepted.",
+                "OBJECTID": "6",
+                "LAYER": "Farmers Market",
+                "THEME": "Local Business & Food",
+                "IMAGE_": "farmsmkt_hstreet.jpg",
+                "ADDRESS": "625 H Street NE  ",
+                "PHONE": "",
+                "WEB_URL": "http://www.freshfarmmarket.org/markets/h_street.html",
+                "WEB_URL2": "http://www.freshfarmmarket.org/",
+                "STEWARD": "Jen",
+                "SOURCE": "http://www.dcfoodfinder.org/",
+                "LAST_UPDAT": "2009",
+                "X": "400226.57",
+                "Y": "136899.1",
+                "ADDRID": "288803",
+                "PRIORITY_LEVEL": "1",
+                "EMAIL_PHONE": "jennifer.guillaume@dc.gov _ 535-2252"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -77.0523495697588,
+                    38.90054582507485
+                ]
+            },
+            "properties": {
+                "name": "Foggy Bottom FRESHFARM Market",
+                "description": "Locally grown fresh fruits and vegetables. April-Nov. Wednesday. WIC and Senior Nutrition coupons accepted.",
+                "OBJECTID": "7",
+                "LAYER": "Farmers Market",
+                "THEME": "Local Business & Food",
+                "IMAGE_": "farmsmkt_foggybottom.jpg",
+                "ADDRESS": "2400 I Street  NW (between 24th Street and New Hampshire Avenue)",
+                "PHONE": "",
+                "WEB_URL": "http://www.freshfarmmarket.org/markets/foggy_bottom.html",
+                "WEB_URL2": "http://www.freshfarmmarket.org/",
+                "STEWARD": "Jen",
+                "SOURCE": "http://www.dcfoodfinder.org/",
+                "LAST_UPDAT": "2009",
+                "X": "395459.23",
+                "Y": "136966.33",
+                "ADDRID": "274025",
+                "EMAIL_PHONE": "jennifer.guillaume@dc.gov _ 535-2252"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -76.99765255052408,
+                    38.90872414375144
+                ]
+            },
+            "properties": {
+                "name": "DC Farmers Market",
+                "description": "Locally grown fresh fruits and vegetables. WIC and Senior Nutrition coupons accepted.",
+                "OBJECTID": "8",
+                "LAYER": "Farmers Market",
+                "THEME": "Local Business & Food",
+                "IMAGE_": "",
+                "ADDRESS": "1309 5TH Street NE ",
+                "PHONE": "",
+                "WEB_URL": "",
+                "WEB_URL2": "",
+                "STEWARD": "Jen",
+                "SOURCE": "http://www.dcfoodfinder.org/",
+                "LAST_UPDAT": "2009",
+                "X": "400203.8",
+                "Y": "137872.89",
+                "ADDRID": "301991",
+                "EMAIL_PHONE": "jennifer.guillaume@dc.gov _ 535-2252"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -77.04268654277624,
+                    38.922668569094114
+                ]
+            },
+            "properties": {
+                "name": "Adams Morgan Farmers Market",
+                "description": "Locally grown fresh fruits and vegetables. May-Dec. Saturday. WIC and Senior Nutrition coupons accepted.",
+                "OBJECTID": "9",
+                "LAYER": "Farmers Market",
+                "THEME": "Local Business & Food",
+                "IMAGE_": "",
+                "ADDRESS": "Columbia Road NW & 18th Street NW  ",
+                "PHONE": "301-587-2248",
+                "WEB_URL": "",
+                "WEB_URL2": "",
+                "STEWARD": "Jen",
+                "SOURCE": "http://www.dcfoodfinder.org/",
+                "LAST_UPDAT": "2009",
+                "X": "396298.579995",
+                "Y": "139421.699999",
+                "ADDRID": "16877",
+                "EMAIL_PHONE": "jennifer.guillaume@dc.gov _ 535-2252"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -77.03195303217574,
+                    38.917005578374315
+                ]
+            },
+            "properties": {
+                "name": "14 and U Market NW Farmers Market",
+                "description": "Locally grown fresh fruits and vegetables. April-Oct. Wednesday. WIC and Senior Nutrition coupons accepted.",
+                "OBJECTID": "10",
+                "LAYER": "Farmers Market",
+                "THEME": "Local Business & Food",
+                "IMAGE_": "",
+                "ADDRESS": "14th Street NW and U Street NW  ",
+                "PHONE": "",
+                "WEB_URL": "http://www.14andufarmersmarket.com/",
+                "WEB_URL2": "",
+                "STEWARD": "Jen",
+                "SOURCE": "http://www.dcfoodfinder.org/",
+                "LAST_UPDAT": "2009",
+                "X": "397229.130011",
+                "Y": "138792.679998",
+                "ADDRID": "15843",
+                "PRIORITY_LEVEL": "1",
+                "EMAIL_PHONE": "jennifer.guillaume@dc.gov _ 535-2252"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -77.06432657926098,
+                    38.94444137695885
+                ]
+            },
+            "properties": {
+                "name": "University of the District of Columbia Farmers Market",
+                "description": "Locally grown fresh fruits and vegetables. July-Nov. Saturday.",
+                "OBJECTID": "11",
+                "LAYER": "Farmers Market",
+                "THEME": "Local Business & Food",
+                "IMAGE_": "",
+                "ADDRESS": "4200 Connecticut Avenue NW  ",
+                "PHONE": "202-274-7148",
+                "WEB_URL": "http://www.udc.edu/farmer_mkt.htm",
+                "WEB_URL2": "",
+                "STEWARD": "Jen",
+                "SOURCE": "http://www.dcfoodfinder.org/",
+                "LAST_UPDAT": "2009",
+                "X": "394423.74",
+                "Y": "141839.77",
+                "ADDRID": "297694",
+                "EMAIL_PHONE": "jennifer.guillaume@dc.gov _ 535-2252"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -77.05477945782926,
+                    38.908577082295366
+                ]
+            },
+            "properties": {
+                "name": "Rose Park Farmers Market",
+                "description": "Locally grown fresh fruits and vegetables. April-Oct. Wednesday. WIC and Senior Nutrition coupons accepted.",
+                "OBJECTID": "12",
+                "LAYER": "Farmers Market",
+                "THEME": "Local Business & Food",
+                "IMAGE_": "",
+                "ADDRESS": "26th Street NW & O Street NW  ",
+                "PHONE": "202-333-4946",
+                "WEB_URL": "",
+                "WEB_URL2": "",
+                "STEWARD": "Jen",
+                "SOURCE": "http://www.dcfoodfinder.org/",
+                "LAST_UPDAT": "2009",
+                "X": "395248.988794",
+                "Y": "137857.987965",
+                "ADDRID": "15719",
+                "EMAIL_PHONE": "jennifer.guillaume@dc.gov _ 535-2252"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -76.9729454121382,
+                    38.88987977654372
+                ]
+            },
+            "properties": {
+                "name": "RFK Stadium Open Air Market",
+                "description": "Locally grown fresh fruits and vegetables. Summer. WIC and Senior Nutrition coupons accepted.",
+                "OBJECTID": "13",
+                "LAYER": "Farmers Market",
+                "THEME": "Local Business & Food",
+                "IMAGE_": "farmsmkt_RFKstadium.jpg",
+                "ADDRESS": "2700 Benning Road NE  ",
+                "PHONE": "301-325-3762",
+                "WEB_URL": "",
+                "WEB_URL2": "",
+                "STEWARD": "Jen",
+                "SOURCE": "http://www.dcfoodfinder.org/",
+                "LAST_UPDAT": "2009",
+                "X": "402347.35",
+                "Y": "135781.36",
+                "ADDRID": "307772",
+                "PRIORITY_LEVEL": "1",
+                "EMAIL_PHONE": "jennifer.guillaume@dc.gov _ 535-2252"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -77.03777320860732,
+                    38.931245187062615
+                ]
+            },
+            "properties": {
+                "name": "Mt. Pleasant Farmers Market",
+                "description": "Locally grown fresh fruits and vegetables. May-Nov. Sat. WIC and Senior Nutrition coupons accepted.",
+                "OBJECTID": "14",
+                "LAYER": "Farmers Market",
+                "THEME": "Local Business & Food",
+                "IMAGE_": "farmsmkt_mtpleasant.jpg",
+                "ADDRESS": "1650 Lamont Street NW  ",
+                "PHONE": "",
+                "WEB_URL": "http://mtpfm.com/",
+                "WEB_URL2": "",
+                "STEWARD": "Jen",
+                "SOURCE": "http://www.dcfoodfinder.org/",
+                "LAST_UPDAT": "2009",
+                "X": "396725.04",
+                "Y": "140373.59",
+                "ADDRID": "226249",
+                "PRIORITY_LEVEL": "1",
+                "EMAIL_PHONE": "jennifer.guillaume@dc.gov _ 535-2252"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -77.05288482747784,
+                    38.92760095831692
+                ]
+            },
+            "properties": {
+                "name": "Twin Springs Farm Stand",
+                "description": "Locally grown fresh fruits and vegetables. Summer-Dec. Saturday.",
+                "OBJECTID": "15",
+                "LAYER": "Farmers Market",
+                "THEME": "Local Business & Food",
+                "IMAGE_": "farmsmkt_twinsprings.jpg",
+                "ADDRESS": "2300 Cathedral Avenue NW  ",
+                "PHONE": "(717) 334-4582",
+                "WEB_URL": "http://www.twinspringsfruitfarm.com/market.html",
+                "WEB_URL2": "",
+                "STEWARD": "Jen",
+                "SOURCE": "http://www.dcfoodfinder.org/",
+                "LAST_UPDAT": "2009",
+                "X": "395414.54",
+                "Y": "139969.7",
+                "ADDRID": "219212",
+                "EMAIL_PHONE": "jennifer.guillaume@dc.gov _ 535-2252"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -76.99108080205858,
+                    38.93353428702776
+                ]
+            },
+            "properties": {
+                "name": "Brookland Farmers Market",
+                "description": "Locally grown fresh fruits and vegetables. WIC and Senior Nutrition coupons accepted.",
+                "OBJECTID": "16",
+                "LAYER": "Farmers Market",
+                "THEME": "Local Business & Food",
+                "IMAGE_": "",
+                "ADDRESS": "12th Street NE & Newton Street NE  ",
+                "PHONE": "202-526-4848",
+                "WEB_URL": "",
+                "WEB_URL2": "",
+                "STEWARD": "Jen",
+                "SOURCE": "http://www.dcfoodfinder.org/",
+                "LAST_UPDAT": "2009",
+                "X": "400773.519999",
+                "Y": "140627.06",
+                "ADDRID": "16406",
+                "PRIORITY_LEVEL": "1",
+                "EMAIL_PHONE": "jennifer.guillaume@dc.gov _ 535-2252"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -76.99845228210683,
+                    38.84311707648856
+                ]
+            },
+            "properties": {
+                "name": "Ward 8 Farmers Market",
+                "description": "Locally grown fresh fruits and vegetables. Saturday. WIC and Senior Nutrition coupons accepted.",
+                "OBJECTID": "17",
+                "LAYER": "Farmers Market",
+                "THEME": "Local Business & Food",
+                "IMAGE_": "farmsmkt_Ward8.jpg",
+                "ADDRESS": "Alabama Avenue SE & 6th Street SE",
+                "PHONE": "202.561.8204",
+                "WEB_URL": "www.congressheightsontherise.com",
+                "WEB_URL2": "",
+                "STEWARD": "Jen",
+                "SOURCE": "http://www.dcfoodfinder.org/",
+                "LAST_UPDAT": "2009",
+                "X": "400134.559998",
+                "Y": "130590.010007",
+                "ADDRID": "17957",
+                "PRIORITY_LEVEL": "1",
+                "EMAIL_PHONE": "jennifer.guillaume@dc.gov _ 535-2252"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -77.0966867871463,
+                    38.917463211397916
+                ]
+            },
+            "properties": {
+                "name": "Palisades Farmers Market",
+                "description": "Locally grown fresh fruits and vegetables. Sunday.",
+                "OBJECTID": "18",
+                "LAYER": "Farmers Market",
+                "THEME": "Local Business & Food",
+                "IMAGE_": "",
+                "ADDRESS": "48th Place NW and MacArthur Boulevard NW",
+                "PHONE": "202-744-7077",
+                "WEB_URL": "http://www.palisadesfarmersmarket.com/",
+                "WEB_URL2": "",
+                "STEWARD": "Jen",
+                "SOURCE": "http://www.dcfoodfinder.org/",
+                "LAST_UPDAT": "2009",
+                "X": "391615.26895",
+                "Y": "138847.436638",
+                "ADDRID": "17316",
+                "PRIORITY_LEVEL": "1",
+                "EMAIL_PHONE": "jennifer.guillaume@dc.gov _ 535-2252"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -77.07109813526044,
+                    38.94709463879726
+                ]
+            },
+            "properties": {
+                "name": "New Morning Farmers Market",
+                "description": "Locally grown fresh fruits and vegetables. Saturday. WIC and Senior Nutrition coupons accepted.",
+                "OBJECTID": "19",
+                "LAYER": "Farmers Market",
+                "THEME": "Local Business & Food",
+                "IMAGE_": "",
+                "ADDRESS": "3600 Alton Place NW ",
+                "PHONE": "814.448.3904",
+                "WEB_URL": "http://newmorningfarm.net/html/markets.html",
+                "WEB_URL2": "",
+                "STEWARD": "Jen",
+                "SOURCE": "http://www.dcfoodfinder.org/",
+                "LAST_UPDAT": "2009",
+                "X": "393836.944728",
+                "Y": "142134.741057",
+                "ADDRID": "12254",
+                "PRIORITY_LEVEL": "1",
+                "EMAIL_PHONE": "jennifer.guillaume@dc.gov _ 535-2252"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -76.92577237703033,
+                    38.89730726884895
+                ]
+            },
+            "properties": {
+                "name": "Riverside Heritage Park Farmers Market",
+                "description": "Locally grown fresh fruits and vegetables. Friday. WIC and Senior Nutrition coupons accepted.",
+                "OBJECTID": "20",
+                "LAYER": "Farmers Market",
+                "THEME": "Local Business & Food",
+                "IMAGE_": "farmsmkt_riverside.jpg",
+                "ADDRESS": "601 Division Avenue NE  Washington DC 20019",
+                "PHONE": "",
+                "WEB_URL": "",
+                "WEB_URL2": "",
+                "STEWARD": "Jen",
+                "SOURCE": "http://www.dcfoodfinder.org/",
+                "LAST_UPDAT": "2009",
+                "X": "406439.23",
+                "Y": "136608.14",
+                "ADDRID": "5742",
+                "PRIORITY_LEVEL": "1",
+                "EMAIL_PHONE": "jennifer.guillaume@dc.gov _ 535-2252"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -77.06874582138794,
+                    38.96601024384458
+                ]
+            },
+            "properties": {
+                "name": "Chevy Chase Farmers Market",
+                "description": "Locally grown fresh fruits and vegetables. Saturday. WIC and Senior Nutrition coupons accepted.",
+                "OBJECTID": "21",
+                "LAYER": "Farmers Market",
+                "THEME": "Local Business & Food",
+                "IMAGE_": "",
+                "ADDRESS": "5700 Broad Branch Road NW  Washington DC 20015",
+                "PHONE": "",
+                "WEB_URL": "http://www.chevychasefarmersmarket.org/",
+                "WEB_URL2": "",
+                "STEWARD": "Jen",
+                "SOURCE": "http://www.dcfoodfinder.org/",
+                "LAST_UPDAT": "2009",
+                "X": "394042.44",
+                "Y": "144234.39",
+                "ADDRID": "263178",
+                "EMAIL_PHONE": "jennifer.guillaume@dc.gov _ 535-2252"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -77.02296480869396,
+                    38.89547280563299
+                ]
+            },
+            "properties": {
+                "name": "Penn Quarter FRESHFARM Farmers Market",
+                "description": "Locally grown fresh fruits and vegetables. April-Dec. Thurs. WIC and Senior Nutrition coupons accepted.",
+                "OBJECTID": "22",
+                "LAYER": "Farmers Market",
+                "THEME": "Local Business & Food",
+                "IMAGE_": "farmsmkt_pennquarter.jpg",
+                "ADDRESS": "800 D Street NW (8th Street NW, between D and E Streets)",
+                "PHONE": "",
+                "WEB_URL": "http://www.freshfarmmarket.org/markets/penn_quarter.html",
+                "WEB_URL2": "http://www.freshfarmmarket.org/",
+                "STEWARD": "Jen",
+                "SOURCE": "http://www.dcfoodfinder.org/",
+                "LAST_UPDAT": "2009",
+                "X": "398008.015772",
+                "Y": "136402.132956",
+                "ADDRID": "11946",
+                "EMAIL_PHONE": "jennifer.guillaume@dc.gov _ 535-2252"
+            }
+        }
+    ]
+}
+
+;
+
+var grocery =
+
+{
+    "type": "FeatureCollection",
+    "features": [
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -76.98655151955585,
+                    38.88354906285678
+                ]
+            },
+            "properties": {
+                "OBJECTID": "1",
+                "STORENAME": "Safeway",
+                "ADDRESS": "415 14TH STREET SE",
+                "PHONE": "2025474333",
+                "NOTES": "",
+                "X_COORD": "401167.04",
+                "Y_COORD": "135078.34",
+                "ADDRESS_ID": "26239",
+                "WARD": "Ward 6",
+                "SSL": "1042    0109"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -77.07299916212476,
+                    38.93435149372009
+                ]
+            },
+            "properties": {
+                "OBJECTID": "2",
+                "STORENAME": "Giant",
+                "ADDRESS": "3336 Wisconsin Ave NW",
+                "PHONE": "(202) 237-5820",
+                "NOTES": "",
+                "X_COORD": "393671.02",
+                "Y_COORD": "140720.27",
+                "ADDRESS_ID": "223125",
+                "WARD": "Ward 3",
+                "SSL": "1920    0832"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -77.02485883166266,
+                    38.938456370779335
+                ]
+            },
+            "properties": {
+                "OBJECTID": "3",
+                "STORENAME": "Safeway",
+                "ADDRESS": "3830 GEORGIA AVENUE NW",
+                "PHONE": "2028821140",
+                "NOTES": "",
+                "X_COORD": "397845.01",
+                "Y_COORD": "141173.71",
+                "ADDRESS_ID": "225076",
+                "WARD": "Ward 4",
+                "SSL": "2905    0814"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -76.94745720858658,
+                    38.89313978162737
+                ]
+            },
+            "properties": {
+                "OBJECTID": "4",
+                "STORENAME": "Safeway",
+                "ADDRESS": "322 40TH STREET NE",
+                "PHONE": "2023972802",
+                "NOTES": "",
+                "X_COORD": "404558.4",
+                "Y_COORD": "136144.21",
+                "ADDRESS_ID": "295141",
+                "WARD": "Ward 7",
+                "SSL": "5051N   0840"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -77.0335677516001,
+                    38.909499107114335
+                ]
+            },
+            "properties": {
+                "OBJECTID": "5",
+                "STORENAME": "Whole Foods",
+                "ADDRESS": "1440 P STREET NW",
+                "PHONE": "2023324300",
+                "NOTES": "Logan Circle",
+                "X_COORD": "397088.79",
+                "Y_COORD": "137959.45",
+                "ADDRESS_ID": "279174",
+                "WARD": "Ward 2",
+                "SSL": "0210    0128"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -77.03298601467985,
+                    38.929308227973344
+                ]
+            },
+            "properties": {
+                "OBJECTID": "6",
+                "STORENAME": "Target",
+                "ADDRESS": "3100 14TH STREET NW",
+                "PHONE": "2027773773",
+                "NOTES": "",
+                "X_COORD": "397140.04",
+                "Y_COORD": "140158.41",
+                "ADDRESS_ID": "306304",
+                "WARD": "Ward 1",
+                "SSL": "2674    0721"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -77.07161524466292,
+                    38.92093428096624
+                ]
+            },
+            "properties": {
+                "OBJECTID": "7",
+                "STORENAME": "Whole Foods",
+                "ADDRESS": "2323 WISCONSIN AVENUE NW",
+                "PHONE": "2023335393",
+                "NOTES": "Georgetown",
+                "X_COORD": "393789.84",
+                "Y_COORD": "139230.75",
+                "ADDRESS_ID": "284358",
+                "WARD": "Ward 3",
+                "SSL": "1299    1028"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -77.07921471990035,
+                    38.949108887222046
+                ]
+            },
+            "properties": {
+                "OBJECTID": "8",
+                "STORENAME": "Whole Foods",
+                "ADDRESS": "4530 40TH STREET NW",
+                "PHONE": "2022375800",
+                "NOTES": "Tenley Town location",
+                "X_COORD": "393133.54",
+                "Y_COORD": "142358.92",
+                "ADDRESS_ID": "265175",
+                "WARD": "Ward 3",
+                "SSL": "1770    0804"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -77.0764593065668,
+                    38.96555324028237
+                ]
+            },
+            "properties": {
+                "OBJECTID": "9",
+                "STORENAME": "Magruders",
+                "ADDRESS": "5626 Connecticut Ave NW",
+                "PHONE": "(202) 686-5271",
+                "NOTES": "",
+                "X_COORD": "393373.92",
+                "Y_COORD": "144184.19",
+                "ADDRESS_ID": "263860",
+                "WARD": "Ward 3",
+                "SSL": "1860    0013"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -77.04099386279987,
+                    38.92421518348706
+                ]
+            },
+            "properties": {
+                "OBJECTID": "10",
+                "STORENAME": "Safeway",
+                "ADDRESS": "1747 COLUMBIA ROAD NW",
+                "PHONE": "2026670774",
+                "NOTES": "",
+                "X_COORD": "396445.44",
+                "Y_COORD": "139593.32",
+                "ADDRESS_ID": "284083",
+                "WARD": "Ward 1",
+                "SSL": "2580    0512"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -77.02212530524507,
+                    38.90877071707104
+                ]
+            },
+            "properties": {
+                "OBJECTID": "11",
+                "STORENAME": "Giant",
+                "ADDRESS": "1400 7th Street NW",
+                "PHONE": "(202) 238-0180",
+                "NOTES": "",
+                "X_COORD": "398081.2",
+                "Y_COORD": "137878.29",
+                "ADDRESS_ID": "304153",
+                "WARD": "Ward 6",
+                "SSL": "0398    0836"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -77.03224562440414,
+                    38.916100881116634
+                ]
+            },
+            "properties": {
+                "OBJECTID": "12",
+                "STORENAME": "Trader Joes",
+                "ADDRESS": "1914 14TH STREET NW",
+                "PHONE": "2029861591",
+                "NOTES": "U street",
+                "X_COORD": "397203.72",
+                "Y_COORD": "138692.26",
+                "ADDRESS_ID": "302384",
+                "WARD": "Ward 2",
+                "SSL": "0205    0847"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -77.06756091263733,
+                    38.91612588552242
+                ]
+            },
+            "properties": {
+                "OBJECTID": "13",
+                "STORENAME": "Safeway",
+                "ADDRESS": "1855 WISCONSIN AVENUE NW",
+                "PHONE": "2023333223",
+                "NOTES": "",
+                "X_COORD": "394141.03",
+                "Y_COORD": "138696.71",
+                "ADDRESS_ID": "224665",
+                "WARD": "Ward 2",
+                "SSL": "1299    1040"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -76.98099934251688,
+                    38.844949480178855
+                ]
+            },
+            "properties": {
+                "OBJECTID": "14",
+                "STORENAME": "Giant",
+                "ADDRESS": "1535 ALABAMA AVENUE SE",
+                "PHONE": "2026106464",
+                "NOTES": "Camp Simms",
+                "X_COORD": "401649.66",
+                "Y_COORD": "130793.59",
+                "ADDRESS_ID": "306557",
+                "WARD": "Ward 8",
+                "SSL": "5912    0818"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -77.03895583952456,
+                    38.912057515955205
+                ]
+            },
+            "properties": {
+                "OBJECTID": "15",
+                "STORENAME": "Safeway",
+                "ADDRESS": "1701 CORCORAN STREET NW",
+                "PHONE": "2026676825",
+                "NOTES": "",
+                "X_COORD": "396621.59",
+                "Y_COORD": "138243.64",
+                "ADDRESS_ID": "241699",
+                "WARD": "Ward 2",
+                "SSL": "0155    0231"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -77.06515039926715,
+                    38.90476755049139
+                ]
+            },
+            "properties": {
+                "OBJECTID": "16",
+                "STORENAME": "Dean & DeLuca",
+                "ADDRESS": "3276 M STREET NW",
+                "PHONE": "2023422500",
+                "NOTES": "Georgetown",
+                "X_COORD": "394349.18",
+                "Y_COORD": "137435.69",
+                "ADDRESS_ID": "273712",
+                "WARD": "Ward 2",
+                "SSL": "1186    0800"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -77.0319237017804,
+                    38.93082173908823
+                ]
+            },
+            "properties": {
+                "OBJECTID": "17",
+                "STORENAME": "Giant",
+                "ADDRESS": "1345 PARK ROAD NW",
+                "PHONE": "2027771077",
+                "NOTES": "Tivoli Square",
+                "X_COORD": "397232.21",
+                "Y_COORD": "140326.39",
+                "ADDRESS_ID": "297595",
+                "WARD": "Ward 1",
+                "SSL": "2837    0079"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -76.9866249868354,
+                    38.88020966142492
+                ]
+            },
+            "properties": {
+                "OBJECTID": "18",
+                "STORENAME": "Harris Teeter",
+                "ADDRESS": "1350 POTOMAC AVENUE SE",
+                "PHONE": "2025431040",
+                "NOTES": "Jenkins Row",
+                "X_COORD": "401160.72",
+                "Y_COORD": "134707.64",
+                "ADDRESS_ID": "303730",
+                "WARD": "Ward 6",
+                "SSL": "1045    0138"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -77.0577904942142,
+                    38.93516642663924
+                ]
+            },
+            "properties": {
+                "OBJECTID": "19",
+                "STORENAME": "Yes! Organic",
+                "ADDRESS": "3425 CONNECTICUT AVENUE NW",
+                "PHONE": "2023631559",
+                "NOTES": "Cleveland Park",
+                "X_COORD": "394989.7",
+                "Y_COORD": "140809.79",
+                "ADDRESS_ID": "219254",
+                "WARD": "Ward 3",
+                "SSL": "2219    0005"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -77.02669236915314,
+                    38.90679819582926
+                ]
+            },
+            "properties": {
+                "OBJECTID": "20",
+                "STORENAME": "Capitol Super Market",
+                "ADDRESS": "1231 11TH STREET NW",
+                "PHONE": "2022891336",
+                "NOTES": "",
+                "X_COORD": "397685.02",
+                "Y_COORD": "137659.43",
+                "ADDRESS_ID": "239341",
+                "WARD": "Ward 2",
+                "SSL": "0340    0824"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -77.00164702126361,
+                    38.900437822269396
+                ]
+            },
+            "properties": {
+                "OBJECTID": "21",
+                "STORENAME": "Giant",
+                "ADDRESS": "300 H STREET NE",
+                "PHONE": "2025485100",
+                "NOTES": "H street",
+                "X_COORD": "399857.33",
+                "Y_COORD": "136953.04",
+                "ADDRESS_ID": "308511",
+                "WARD": "Ward 6",
+                "SSL": "0776    0054"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -77.01835491740452,
+                    38.90349680088984
+                ]
+            },
+            "properties": {
+                "OBJECTID": "22",
+                "STORENAME": "Safeway",
+                "ADDRESS": "490 L STREET NW",
+                "PHONE": "2027192435",
+                "NOTES": "Mt. Vernon Square",
+                "X_COORD": "398408.1",
+                "Y_COORD": "137292.77",
+                "ADDRESS_ID": "304767",
+                "WARD": "Ward 6",
+                "SSL": "0515    0158"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -76.99039745360022,
+                    38.936824244909154
+                ]
+            },
+            "properties": {
+                "OBJECTID": "23",
+                "STORENAME": "Yes! Organic",
+                "ADDRESS": "3809 12TH STREET NE",
+                "PHONE": "2028327715",
+                "NOTES": "Brookland",
+                "X_COORD": "400832.73",
+                "Y_COORD": "140992.28",
+                "ADDRESS_ID": "30397",
+                "WARD": "Ward 5",
+                "SSL": "3925    0085"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -77.09596213669981,
+                    38.91744140840144
+                ]
+            },
+            "properties": {
+                "OBJECTID": "24",
+                "STORENAME": "Safeway",
+                "ADDRESS": "4865 MACARTHUR BOULEVARD NW",
+                "PHONE": "2023375649",
+                "NOTES": "",
+                "X_COORD": "391678.11",
+                "Y_COORD": "138844.95",
+                "ADDRESS_ID": "285004",
+                "WARD": "Ward 3",
+                "SSL": "1389    0025"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -77.04371097067208,
+                    38.921804472209395
+                ]
+            },
+            "properties": {
+                "OBJECTID": "25",
+                "STORENAME": "Yes! Organic",
+                "ADDRESS": "1825 Columbia Rd. NW",
+                "PHONE": "(202) 462-2069",
+                "NOTES": "Adams Morgan",
+                "X_COORD": "396209.7",
+                "Y_COORD": "139325.82",
+                "ADDRESS_ID": "295011",
+                "WARD": "Ward 1",
+                "SSL": "2549    0636"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -77.05301446952657,
+                    38.90419895488753
+                ]
+            },
+            "properties": {
+                "OBJECTID": "26",
+                "STORENAME": "Trader Joes",
+                "ADDRESS": "1101 25TH STREET NW",
+                "PHONE": "2022961921",
+                "NOTES": "West End",
+                "X_COORD": "395401.79",
+                "Y_COORD": "137371.89",
+                "ADDRESS_ID": "303613",
+                "WARD": "Ward 2",
+                "SSL": "0025    0022"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -77.03844187391378,
+                    38.92198694131333
+                ]
+            },
+            "properties": {
+                "OBJECTID": "27",
+                "STORENAME": "Harris Teeter",
+                "ADDRESS": "1631 KALORAMA ROAD NW",
+                "PHONE": "2029861415",
+                "NOTES": "Citadel",
+                "X_COORD": "396666.63",
+                "Y_COORD": "139345.87",
+                "ADDRESS_ID": "284059",
+                "WARD": "Ward 1",
+                "SSL": "2572    0036"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -76.99243094601405,
+                    38.919229805772844
+                ]
+            },
+            "properties": {
+                "OBJECTID": "28",
+                "STORENAME": "Giant",
+                "ADDRESS": "1050 BRENTWOOD ROAD NE",
+                "PHONE": "2022813900",
+                "NOTES": "",
+                "X_COORD": "400656.59",
+                "Y_COORD": "139039.13",
+                "ADDRESS_ID": "299835",
+                "WARD": "Ward 5",
+                "SSL": "3854    0802"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -77.03854439485848,
+                    38.93094342714182
+                ]
+            },
+            "properties": {
+                "OBJECTID": "29",
+                "STORENAME": "BestWorld",
+                "ADDRESS": "3178 Mt Pleasant Street NW",
+                "PHONE": "(202) 265-3768",
+                "NOTES": "Used to be Best Way",
+                "X_COORD": "396658.16",
+                "Y_COORD": "140340.12",
+                "ADDRESS_ID": "233149",
+                "WARD": "Ward 1",
+                "SSL": "2601    0667"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -76.97803182686684,
+                    38.90156929061073
+                ]
+            },
+            "properties": {
+                "OBJECTID": "30",
+                "STORENAME": "Aldi",
+                "ADDRESS": "901 17TH STREET NE",
+                "PHONE": "0",
+                "NOTES": "",
+                "X_COORD": "401905.76",
+                "Y_COORD": "137078.87",
+                "ADDRESS_ID": "308898",
+                "WARD": "Ward 5",
+                "SSL": "4488    0040"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -77.07490967108406,
+                    38.964600719779654
+                ]
+            },
+            "properties": {
+                "OBJECTID": "31",
+                "STORENAME": "Safeway",
+                "ADDRESS": "5545 Connecticut Ave NW",
+                "PHONE": "(202) 244-6097",
+                "NOTES": "",
+                "X_COORD": "393508.13",
+                "Y_COORD": "144078.34",
+                "ADDRESS_ID": "263999",
+                "WARD": "Ward 3",
+                "SSL": "1867    0092"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -77.09504232704536,
+                    38.94574943168757
+                ]
+            },
+            "properties": {
+                "OBJECTID": "32",
+                "STORENAME": "Fresh and Greens",
+                "ADDRESS": "4330 48TH STREET NW",
+                "PHONE": "2022446525",
+                "NOTES": "Same location as A&P",
+                "X_COORD": "391761.15",
+                "Y_COORD": "141987.3",
+                "ADDRESS_ID": "269574",
+                "WARD": "Ward 3",
+                "SSL": "1499    0807"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -77.06317252199277,
+                    38.94450677592913
+                ]
+            },
+            "properties": {
+                "OBJECTID": "33",
+                "STORENAME": "Giant",
+                "ADDRESS": "4303 CONNECTICUT AVENUE NW",
+                "PHONE": "2023648250",
+                "NOTES": "",
+                "X_COORD": "394523.79",
+                "Y_COORD": "141846.96",
+                "ADDRESS_ID": "301784",
+                "WARD": "Ward 3",
+                "SSL": "2049    0805"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -77.02552897652143,
+                    38.94103647207486
+                ]
+            },
+            "properties": {
+                "OBJECTID": "34",
+                "STORENAME": "Yes! Organic",
+                "ADDRESS": "4100 Georgia Ave NW",
+                "PHONE": "(202) 291-5790",
+                "NOTES": "Petworth",
+                "X_COORD": "397786.99",
+                "Y_COORD": "141460.14",
+                "ADDRESS_ID": "300492",
+                "WARD": "Ward 4",
+                "SSL": "2910    0810"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -77.02655062193581,
+                    38.96952840268178
+                ]
+            },
+            "properties": {
+                "OBJECTID": "35",
+                "STORENAME": "Safeway",
+                "ADDRESS": "6500 PINEY BRANCH ROAD NW",
+                "PHONE": "2027235644",
+                "NOTES": "",
+                "X_COORD": "397699.34",
+                "Y_COORD": "144623.03",
+                "ADDRESS_ID": "285341",
+                "WARD": "Ward 4",
+                "SSL": "2974    0020"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -77.02728513969281,
+                    38.96207832193899
+                ]
+            },
+            "properties": {
+                "OBJECTID": "36",
+                "STORENAME": "Walmart",
+                "ADDRESS": "5929 GEORGIA AVENUE NW",
+                "PHONE": "2027193770",
+                "NOTES": "",
+                "X_COORD": "397635.44",
+                "Y_COORD": "143796.02",
+                "ADDRESS_ID": "254296",
+                "WARD": "Ward 4",
+                "SSL": "2986    0039"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -76.99466355031821,
+                    38.88339026661764
+                ]
+            },
+            "properties": {
+                "OBJECTID": "37",
+                "STORENAME": "Yes! Organic",
+                "ADDRESS": "410 8TH STREET SE",
+                "PHONE": "2025464325",
+                "NOTES": "",
+                "X_COORD": "400463.21",
+                "Y_COORD": "135060.64",
+                "ADDRESS_ID": "300093",
+                "WARD": "Ward 6",
+                "SSL": "0925    0026"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -77.00549455502134,
+                    38.90602306491623
+                ]
+            },
+            "properties": {
+                "OBJECTID": "38",
+                "STORENAME": "Harris Teeter",
+                "ADDRESS": "1201 1st St NE",
+                "PHONE": "(202) 589-0351",
+                "NOTES": "Constitution Square",
+                "X_COORD": "399523.62",
+                "Y_COORD": "137573.06",
+                "ADDRESS_ID": "303728",
+                "WARD": "Ward 6",
+                "SSL": "0711    0816"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -76.96667323466005,
+                    38.85903221903893
+                ]
+            },
+            "properties": {
+                "OBJECTID": "39",
+                "STORENAME": "Safeway",
+                "ADDRESS": "2845 ALABAMA AVENUE SE",
+                "PHONE": "2025757525",
+                "NOTES": "",
+                "X_COORD": "402892.75",
+                "Y_COORD": "132357.23",
+                "ADDRESS_ID": "278282",
+                "WARD": "Ward 7",
+                "SSL": "5642    0001"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -77.01716180534368,
+                    38.877621504691085
+                ]
+            },
+            "properties": {
+                "OBJECTID": "40",
+                "STORENAME": "Safeway",
+                "ADDRESS": "1100 4TH STREET SW",
+                "PHONE": "2025549155",
+                "NOTES": "",
+                "X_COORD": "398511.05",
+                "Y_COORD": "134420.39",
+                "ADDRESS_ID": "307170",
+                "WARD": "Ward 6",
+                "SSL": "0542    0872"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -77.0000965513043,
+                    38.876224302397254
+                ]
+            },
+            "properties": {
+                "OBJECTID": "41",
+                "STORENAME": "Harris Teeter",
+                "ADDRESS": "401 M Street SE",
+                "PHONE": "(202) 554-0164",
+                "NOTES": "The Yards",
+                "X_COORD": "399991.82",
+                "Y_COORD": "134265.15",
+                "ADDRESS_ID": "309432",
+                "WARD": "Ward 6",
+                "SSL": "0771    0811"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -77.03161976161866,
+                    38.91850672735706
+                ]
+            },
+            "properties": {
+                "OBJECTID": "42",
+                "STORENAME": "Yes! Organic",
+                "ADDRESS": "2123 14TH STREET NW",
+                "PHONE": "2022326603",
+                "NOTES": "U Street",
+                "X_COORD": "397258.09",
+                "Y_COORD": "138959.31",
+                "ADDRESS_ID": "306454",
+                "WARD": "Ward 1",
+                "SSL": "0235    0204"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -77.02324288499977,
+                    38.909186235241364
+                ]
+            },
+            "properties": {
+                "OBJECTID": "43",
+                "STORENAME": "Giant",
+                "ADDRESS": "1414 8th Street  NW",
+                "PHONE": "(202) 234-0215",
+                "NOTES": "",
+                "X_COORD": "397984.28",
+                "Y_COORD": "137924.44",
+                "ADDRESS_ID": "297619",
+                "WARD": "Ward 6",
+                "SSL": "0398    0834"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -76.95088115617465,
+                    38.9208509565686
+                ]
+            },
+            "properties": {
+                "OBJECTID": "44",
+                "STORENAME": "Costco",
+                "ADDRESS": "2441 MARKET STREET NE",
+                "PHONE": "2022698540",
+                "NOTES": "",
+                "X_COORD": "404259.71",
+                "Y_COORD": "139220.21",
+                "ADDRESS_ID": "309925",
+                "WARD": "Ward 5",
+                "SSL": "4327    0004"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -77.08246449753962,
+                    38.95234016155867
+                ]
+            },
+            "properties": {
+                "OBJECTID": "45",
+                "STORENAME": "Safeway",
+                "ADDRESS": "4203 DAVENPORT STREET NW",
+                "PHONE": "2023640290",
+                "NOTES": "",
+                "X_COORD": "392852.16",
+                "Y_COORD": "142717.87",
+                "ADDRESS_ID": "301160",
+                "WARD": "Ward 3",
+                "SSL": "1672    0815"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -77.01216194484776,
+                    38.9003920687558
+                ]
+            },
+            "properties": {
+                "OBJECTID": "46",
+                "STORENAME": "Walmart",
+                "ADDRESS": "99 H STREET NW",
+                "PHONE": "2027192110",
+                "NOTES": "H street",
+                "X_COORD": "398960.4",
+                "Y_COORD": "136949.39",
+                "ADDRESS_ID": "310062",
+                "WARD": "Ward 6",
+                "SSL": "0623    0835"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -77.04906991376862,
+                    38.90091857333816
+                ]
+            },
+            "properties": {
+                "OBJECTID": "47",
+                "STORENAME": "Whole Foods",
+                "ADDRESS": "2201 I STREET NW",
+                "PHONE": "2022961660",
+                "NOTES": "Foggy Bottom",
+                "X_COORD": "395743.74",
+                "Y_COORD": "137007.55",
+                "ADDRESS_ID": "310098",
+                "WARD": "Ward 2",
+                "SSL": "0054    0843"
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -76.97977232815262,
+                    38.90057508209077
+                ]
+            },
+            "properties": {
+                "OBJECTID": "48",
+                "STORENAME": "Safeway",
+                "ADDRESS": "1601 MARYLAND AVENUE NE",
+                "PHONE": "2023986903",
+                "NOTES": "",
+                "X_COORD": "401754.81",
+                "Y_COORD": "136968.47",
+                "ADDRESS_ID": "297814",
+                "WARD": "Ward 5",
+                "SSL": "4493    0001"
+            }
+        }
+    ]
+}
+
+// Add marker color, symbol, and size to farmers_markets GeoJSON
+
+for(var i = 0; i < farmers_markets.features.length; i++) {
+  farmers_markets.features[i].properties['marker-color'] = '#DC143C';
+  farmers_markets.features[i].properties['marker-symbol'] = 'grocery';
+  farmers_markets.features[i].properties['marker-size'] = 'small';
+};
+  
+for(var i = 0; i < grocery.features.length; i++) {
+  grocery.features[i].properties['marker-color'] = 'FF9966';
+  grocery.features[i].properties['marker-symbol'] = 'farm';
+  grocery.features[i].properties['marker-size'] = 'small';
+};
+
+    L.mapbox.accessToken = 'pk.eyJ1IjoibWJyYXh0b24iLCJhIjoiUVdQeWNrOCJ9.2YyGRf409vTlt1Nmt2ZUGQ';
+    var map = L.mapbox.map('map', 'mapbox.light')
+    .setView([38.921932, -77.008673], 12);
+    map.scrollWheelZoom.disable();
+
+var farmers_marketsLayer = L.mapbox.featureLayer(farmers_markets)
+    .addTo(map);
+var groceryLayer = L.mapbox.featureLayer(grocery)
+    .addTo(map);
+    
+</script>
